@@ -1,13 +1,1194 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Natural Camouflage — Gems Bulls | Shop</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Natural Camouflage — Gems Bulls | Bagé, RS</title>
+  <meta name="description" content="Natural Camouflage Gems Bulls — Streetwear de Bagé, RS. Camisetas, Jaquetas e Moletons com identidade única." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black:    #0a0a0a;
+      --off-black:#111111;
+      --dark:     #1a1a1a;
+      --camo-dark:#2c3a2a;
+      --camo-mid: #4a6048;
+      --camo-lite:#6b8c60;
+      --sage:     #8faf82;
+      --mist:     #b5c9ae;
+      --white:    #f0f0e8;
+      --cream:    #e8e4d4;
+      --grey:     #888880;
+      --accent:   #9ab88a;
+
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-mono:    'Space Mono', monospace;
+      --font-body:    'DM Sans', sans-serif;
+
+      --nav-h: 72px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { cursor: pointer; border: none; background: none; font: inherit; }
+
+    /* ===== CUSTOM SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--camo-mid); }
+
+    /* ===== TICKER ===== */
+    .ticker-wrap {
+      background: var(--camo-dark);
+      overflow: hidden;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--camo-mid);
+      position: relative;
+      z-index: 10;
+    }
+    .ticker {
+      display: flex;
+      gap: 0;
+      animation: ticker 28s linear infinite;
+      width: max-content;
+    }
+    .ticker span {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mist);
+      padding: 0 48px;
+      white-space: nowrap;
+    }
+    .ticker span::before {
+      content: '▸';
+      margin-right: 16px;
+      color: var(--sage);
+    }
+    @keyframes ticker {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      transition: background 0.4s, backdrop-filter 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(107,140,96,0.2);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 26px;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .nav-logo span { color: var(--white); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--grey);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-cart {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--camo-dark);
+      border: 1px solid var(--camo-mid);
+      padding: 8px 18px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .nav-cart:hover { background: var(--camo-mid); border-color: var(--sage); }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+      padding-top: var(--nav-h);
+    }
+
+    /* Camo texture overlay */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse at 30% 60%, rgba(44,58,42,0.5) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(74,96,72,0.3) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234a6048' fill-opacity='0.04'%3E%3Cpath d='M50 50c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10-10-4.5-10-10zm-20 0c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10-10-4.5-10-10zm-20 0c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10-10-4.5-10-10zm60-20c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10-10-4.5-10-10zm-20 0c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10-10-4.5-10-10zm-20 0c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10-10-4.5-10-10zm-20 0c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10-10-4.5-10-10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-left {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 60px 80px 80px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--sage);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(72px, 9vw, 120px);
+      line-height: 0.92;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 32px;
+    }
+    .hero-title .accent { color: var(--accent); }
+    .hero-title .outline {
+      -webkit-text-stroke: 1px var(--camo-lite);
+      color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      color: var(--grey);
+      max-width: 380px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--accent);
+      padding: 16px 36px;
+      border: 1px solid var(--accent);
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover {
+      background: var(--sage);
+      border-color: var(--sage);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mist);
+      background: transparent;
+      padding: 16px 36px;
+      border: 1px solid var(--camo-mid);
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-outline:hover {
+      border-color: var(--sage);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 64px;
+      padding-top: 48px;
+      border-top: 1px solid rgba(107,140,96,0.2);
+    }
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 36px;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    /* Hero Right — Logo Display */
+    .hero-right {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-logo-wrap {
+      position: relative;
+      width: 480px;
+      height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Decorative rings */
+    .hero-logo-wrap::before,
+    .hero-logo-wrap::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(107,140,96,0.15);
+      animation: rotate 30s linear infinite;
+    }
+    .hero-logo-wrap::before {
+      width: 520px; height: 520px;
+    }
+    .hero-logo-wrap::after {
+      width: 420px; height: 420px;
+      animation-direction: reverse;
+      animation-duration: 20s;
+      border-color: rgba(143,175,130,0.1);
+    }
+    @keyframes rotate {
+      to { transform: rotate(360deg); }
+    }
+
+    .logo-svg-container {
+      width: 360px;
+      height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 0 60px rgba(107,140,96,0.2));
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* SVG logo reconstruction — oval shape with text */
+    .logo-oval {
+      background: radial-gradient(ellipse at center, #2c3a2a 0%, #1a2218 100%);
+      border: 2px solid rgba(107,140,96,0.3);
+      border-radius: 50%;
+      width: 340px;
+      height: 260px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 30px;
+      text-align: center;
+      box-shadow: 0 0 0 8px rgba(44,58,42,0.3), inset 0 0 40px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .logo-oval::before {
+      content: '';
+      position: absolute;
+      inset: -20px;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 8px,
+        rgba(74,96,72,0.05) 8px,
+        rgba(74,96,72,0.05) 16px
+      );
+    }
+
+    .logo-line-1 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 0.08em;
+      color: #8faf82;
+      text-shadow: 0 0 20px rgba(143,175,130,0.3);
+      position: relative;
+      z-index: 1;
+      line-height: 1.1;
+    }
+    .logo-line-2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      letter-spacing: 0.05em;
+      color: #a5c498;
+      text-shadow: 0 0 30px rgba(143,175,130,0.4);
+      position: relative;
+      z-index: 1;
+      line-height: 1;
+    }
+    .logo-line-3 {
+      font-family: var(--font-display);
+      font-size: 52px;
+      letter-spacing: 0.03em;
+      color: #b5c9ae;
+      text-shadow: 0 0 40px rgba(181,201,174,0.3);
+      position: relative;
+      z-index: 1;
+      line-height: 1;
+    }
+    .logo-sub {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.3em;
+      color: rgba(143,175,130,0.7);
+      position: relative;
+      z-index: 1;
+      margin-top: 8px;
+      text-transform: uppercase;
+    }
+
+    /* ===== MARQUEE BAND ===== */
+    .marquee-band {
+      background: var(--camo-dark);
+      border-top: 1px solid var(--camo-mid);
+      border-bottom: 1px solid var(--camo-mid);
+      overflow: hidden;
+      padding: 12px 0;
+    }
+    .marquee-track {
+      display: flex;
+      animation: marquee 20s linear infinite;
+      width: max-content;
+    }
+    .marquee-track span {
+      font-family: var(--font-display);
+      font-size: 14px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--sage);
+      padding: 0 40px;
+      white-space: nowrap;
+    }
+    .marquee-track span.sep { color: var(--camo-mid); }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ===== SECTIONS SHARED ===== */
+    section { padding: 100px 80px; }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--sage);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 5vw, 72px);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1;
+      color: var(--white);
+    }
+
+    /* ===== DROPS SECTION ===== */
+    .drops { background: var(--off-black); }
+
+    .drops-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 64px;
+    }
+
+    .drops-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .product-card {
+      background: var(--dark);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      group: true;
+    }
+
+    .product-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--camo-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Product placeholder art */
+    .product-img::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--camo-dark) 0%, var(--dark) 100%);
+    }
+    .product-img-icon {
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-display);
+      font-size: 80px;
+      color: rgba(107,140,96,0.15);
+      letter-spacing: -4px;
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: var(--accent);
+      color: var(--black);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      font-weight: 700;
+    }
+
+    .product-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(44,58,42,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .product-card:hover .product-overlay { opacity: 1; }
+    .product-overlay .btn-primary { font-size: 10px; padding: 12px 24px; }
+
+    .product-info {
+      padding: 20px 24px;
+      border-top: 1px solid rgba(107,140,96,0.1);
+    }
+    .product-cat {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 8px;
+    }
+    .product-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .product-price {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--accent);
+    }
+
+    /* ===== COMING SOON DROPS ===== */
+    .coming-soon {
+      background: var(--camo-dark);
+      border: 1px solid var(--camo-mid);
+      padding: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      margin-top: 2px;
+    }
+    .cs-left { flex: 1; }
+    .cs-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 16px;
+    }
+    .cs-title {
+      font-family: var(--font-display);
+      font-size: 48px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .cs-sub {
+      font-size: 14px;
+      color: var(--grey);
+    }
+    .cs-items {
+      display: flex;
+      gap: 24px;
+    }
+    .cs-item {
+      background: rgba(10,10,10,0.5);
+      border: 1px solid rgba(107,140,96,0.3);
+      padding: 24px 32px;
+      text-align: center;
+    }
+    .cs-item-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+    .cs-item-name {
+      font-family: var(--font-display);
+      font-size: 18px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .cs-item-sub {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage);
+    }
+
+    /* ===== ABOUT SECTION ===== */
+    .about {
+      background: var(--black);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+    .about-img-main {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: var(--camo-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(107,140,96,0.2);
+    }
+    .about-img-main-text {
+      font-family: var(--font-display);
+      font-size: 14px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(107,140,96,0.3);
+    }
+    .about-img-accent {
+      position: absolute;
+      bottom: -24px;
+      right: -24px;
+      width: 180px;
+      aspect-ratio: 1;
+      background: var(--camo-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .about-img-accent-num {
+      font-family: var(--font-display);
+      font-size: 40px;
+      color: var(--white);
+      line-height: 1;
+    }
+    .about-img-accent-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(240,240,232,0.7);
+      text-align: center;
+    }
+
+    .about-content { padding-right: 20px; }
+    .about-body {
+      color: var(--grey);
+      line-height: 1.8;
+      margin: 24px 0 40px;
+      font-size: 15px;
+    }
+    .about-body strong { color: var(--white); font-weight: 500; }
+
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 32px;
+    }
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--sage);
+      border: 1px solid rgba(107,140,96,0.4);
+      padding: 6px 14px;
+    }
+
+    /* ===== NEWSLETTER ===== */
+    .newsletter {
+      background: var(--camo-dark);
+      border-top: 1px solid var(--camo-mid);
+      border-bottom: 1px solid var(--camo-mid);
+      text-align: center;
+      padding: 80px;
+    }
+    .newsletter .section-label { justify-content: center; }
+    .newsletter .section-label::before { display: none; }
+    .newsletter .section-title { margin-bottom: 16px; }
+    .newsletter-sub {
+      color: var(--grey);
+      font-size: 15px;
+      margin-bottom: 40px;
+    }
+    .newsletter-form {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .newsletter-input {
+      flex: 1;
+      background: rgba(10,10,10,0.6);
+      border: 1px solid var(--camo-mid);
+      border-right: none;
+      padding: 16px 20px;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 14px;
+      outline: none;
+    }
+    .newsletter-input::placeholder { color: var(--grey); }
+    .newsletter-input:focus { border-color: var(--sage); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--off-black);
+      padding: 60px 80px 40px;
+      border-top: 1px solid rgba(107,140,96,0.1);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+    .footer-brand .nav-logo { font-size: 28px; margin-bottom: 16px; }
+    .footer-tagline {
+      font-size: 13px;
+      color: var(--grey);
+      line-height: 1.7;
+      max-width: 260px;
+      margin-bottom: 24px;
+    }
+    .footer-social {
+      display: flex;
+      gap: 12px;
+    }
+    .social-link {
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(107,140,96,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .social-link:hover { background: var(--camo-dark); border-color: var(--sage); }
+
+    .footer-col h4 {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul a {
+      font-size: 13px;
+      color: var(--grey);
+      transition: color 0.2s;
+    }
+    .footer-col ul a:hover { color: var(--white); }
+
+    .footer-bottom {
+      padding-top: 32px;
+      border-top: 1px solid rgba(107,140,96,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: rgba(136,136,128,0.6);
+    }
+    .footer-location {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      section { padding: 80px 40px; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 60px 40px; }
+      .drops-grid { grid-template-columns: 1fr 1fr; }
+      .about { grid-template-columns: 1fr; padding: 80px 40px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      section { padding: 60px 24px; }
+      .hero-left { padding: 40px 24px; }
+      .hero-title { font-size: 64px; }
+      .drops-grid { grid-template-columns: 1fr; }
+      .drops-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .coming-soon { flex-direction: column; padding: 40px 24px; }
+      .cs-items { flex-direction: column; }
+      .newsletter { padding: 60px 24px; }
+      .newsletter-form { flex-direction: column; }
+      .newsletter-input { border-right: 1px solid var(--camo-mid); }
+      footer { padding: 60px 24px 32px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    /* ===== ANIMATIONS ON SCROLL ===== */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap" style="margin-top: 72px;">
+    <div class="ticker">
+      <span>Frete para todo o Brasil</span>
+      <span>Nova coleção em breve</span>
+      <span>Streetwear autêntico de Bagé</span>
+      <span>Camisetas disponíveis agora</span>
+      <span>Jaquetas — Em breve</span>
+      <span>Moletons — Em breve</span>
+      <span>Frete para todo o Brasil</span>
+      <span>Nova coleção em breve</span>
+      <span>Streetwear autêntico de Bagé</span>
+      <span>Camisetas disponíveis agora</span>
+      <span>Jaquetas — Em breve</span>
+      <span>Moletons — Em breve</span>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <div class="nav-logo">Natural <span>Camouflage</span></div>
+    <ul class="nav-links">
+      <li><a href="#drops">Drops</a></li>
+      <li><a href="#about">A Marca</a></li>
+      <li><a href="#newsletter">Contato</a></li>
+    </ul>
+    <button class="nav-cart" onclick="window.location.href='frontend/natural-camo-front/index.html'">
+      ◉ Shop Online
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-left fade-up">
+      <div class="hero-eyebrow">Bagé, RS — Brasil</div>
+      <h1 class="hero-title">
+        Natural<br/>
+        <span class="accent">Camo</span><br/>
+        <span class="outline">Style</span>
+      </h1>
+      <p class="hero-desc">
+        Streetwear com identidade própria. Peças feitas para quem vive
+        a rua com autenticidade — inspiração school, pegada street.
+      </p>
+      <div class="hero-ctas">
+        <a href="#drops" class="btn-primary">Ver Coleção</a>
+        <a href="#about" class="btn-outline">Nossa História</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-value">100%</div>
+          <div class="stat-label">Autêntico</div>
+        </div>
+        <div>
+          <div class="stat-value">BR</div>
+          <div class="stat-label">Feito Aqui</div>
+        </div>
+        <div>
+          <div class="stat-value">∞</div>
+          <div class="stat-label">Estilo</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-logo-wrap">
+        <div class="logo-svg-container">
+          <div class="logo-oval">
+            <div class="logo-line-1">NATURAL</div>
+            <div class="logo-line-2">CAMOUFLAGE</div>
+            <div class="logo-line-3">GEMS BULLS</div>
+            <div class="logo-sub">Bagé, RS — Brasil</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-band">
+    <div class="marquee-track">
+      <span>Natural Camouflage</span><span class="sep">✦</span>
+      <span>Gems Bulls</span><span class="sep">✦</span>
+      <span>Streetwear</span><span class="sep">✦</span>
+      <span>Bagé, RS</span><span class="sep">✦</span>
+      <span>Camisetas</span><span class="sep">✦</span>
+      <span>Jaquetas</span><span class="sep">✦</span>
+      <span>Moletons</span><span class="sep">✦</span>
+      <span>School Style</span><span class="sep">✦</span>
+      <span>Natural Camouflage</span><span class="sep">✦</span>
+      <span>Gems Bulls</span><span class="sep">✦</span>
+      <span>Streetwear</span><span class="sep">✦</span>
+      <span>Bagé, RS</span><span class="sep">✦</span>
+      <span>Camisetas</span><span class="sep">✦</span>
+      <span>Jaquetas</span><span class="sep">✦</span>
+      <span>Moletons</span><span class="sep">✦</span>
+      <span>School Style</span><span class="sep">✦</span>
+    </div>
+  </div>
+
+  <!-- DROPS -->
+  <section class="drops" id="drops">
+    <div class="drops-header fade-up">
+      <div>
+        <div class="section-label">Coleção Atual</div>
+        <h2 class="section-title">Drops</h2>
+      </div>
+      <a href="frontend/natural-camo-front/index.html" class="btn-outline">Ver tudo →</a>
+    </div>
+
+    <div class="drops-grid fade-up">
+      <!-- Card 1 -->
+      <div class="product-card">
+        <div class="product-img">
+          <div class="product-img-icon">NC</div>
+          <div class="product-badge">Disponível</div>
+          <div class="product-overlay">
+            <a href="frontend/natural-camo-front/index.html" class="btn-primary">Comprar Agora</a>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="product-cat">Camiseta</div>
+          <div class="product-name">NC Classic Logo Tee</div>
+          <div class="product-price">R$ 79,90</div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="product-card">
+        <div class="product-img" style="background: linear-gradient(135deg, #1a2218 0%, #2c3a2a 100%);">
+          <div class="product-img-icon" style="color: rgba(181,201,174,0.15);">GB</div>
+          <div class="product-badge">Disponível</div>
+          <div class="product-overlay">
+            <a href="frontend/natural-camo-front/index.html" class="btn-primary">Comprar Agora</a>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="product-cat">Camiseta</div>
+          <div class="product-name">Gems Bulls Heritage</div>
+          <div class="product-price">R$ 79,90</div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="product-card">
+        <div class="product-img" style="background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%);">
+          <div class="product-img-icon" style="font-size: 60px; color: rgba(107,140,96,0.2);">CAMO</div>
+          <div class="product-badge" style="background: var(--camo-mid); color: var(--white);">Limitado</div>
+          <div class="product-overlay">
+            <a href="frontend/natural-camo-front/index.html" class="btn-primary">Comprar Agora</a>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="product-cat">Camiseta</div>
+          <div class="product-name">Camo Drop Vol.1</div>
+          <div class="product-price">R$ 89,90</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coming Soon -->
+    <div class="coming-soon fade-up">
+      <div class="cs-left">
+        <div class="cs-label">⏳ Em breve</div>
+        <h3 class="cs-title">Novos Drops<br/>Chegando</h3>
+        <p class="cs-sub">Jaquetas e moletons com o DNA da Natural Camouflage.<br/>Siga nosso Instagram para ficar por dentro.</p>
+        <div style="margin-top: 24px;">
+          <a href="#newsletter" class="btn-outline">Me avisa quando chegar</a>
+        </div>
+      </div>
+      <div class="cs-items">
+        <div class="cs-item">
+          <div class="cs-item-icon">🧥</div>
+          <div class="cs-item-name">Jaqueta</div>
+          <div class="cs-item-sub">Em Desenvolvimento</div>
+        </div>
+        <div class="cs-item">
+          <div class="cs-item-icon">🧣</div>
+          <div class="cs-item-name">Moletom</div>
+          <div class="cs-item-sub">Em Desenvolvimento</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-visual fade-up">
+      <div class="about-img-main">
+        <div class="about-img-main-text">Natural Camouflage<br/>Gems Bulls</div>
+      </div>
+      <div class="about-img-accent">
+        <div class="about-img-accent-num">100%</div>
+        <div class="about-img-accent-label">Identidade<br/>Própria</div>
+      </div>
+    </div>
+
+    <div class="about-content fade-up">
+      <div class="section-label">A Marca</div>
+      <h2 class="section-title">Feito em<br/>Bagé</h2>
+      <p class="about-body">
+        A <strong>Natural Camouflage</strong> nasceu em Bagé, RS, com uma missão simples:
+        criar roupas que representem quem vive a rua sem precisar de permissão.
+        <br/><br/>
+        Inspirada no universo <strong>school e street</strong> — referências como VANS, skateboard
+        e cultura urbana —, cada peça carrega um conceito visual forte e acabamento de qualidade.
+        <br/><br/>
+        Começamos com camisetas. Estamos crescendo. As jaquetas e moletons vêm com tudo.
+      </p>
+      <a href="frontend/natural-camo-front/index.html" class="btn-primary">Ver Coleção Completa</a>
+      <div class="about-tags">
+        <span class="tag">Streetwear</span>
+        <span class="tag">School Style</span>
+        <span class="tag">Bagé, RS</span>
+        <span class="tag">Autêntico</span>
+        <span class="tag">Street Culture</span>
+        <span class="tag">Brasil</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter" id="newsletter">
+    <div class="section-label">Fique por dentro</div>
+    <h2 class="section-title fade-up">Novidades em<br/>Primeira Mão</h2>
+    <p class="newsletter-sub fade-up">Drops limitados, lançamentos e promoções exclusivas. Seja o primeiro a saber.</p>
+    <div class="newsletter-form fade-up">
+      <input
+        type="email"
+        class="newsletter-input"
+        placeholder="Seu e-mail aqui"
+        id="email-input"
+      />
+      <button class="btn-primary" onclick="handleNewsletter()">Entrar na Lista</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">Natural <span>Camouflage</span></div>
+        <p class="footer-tagline">
+          Streetwear autêntico com alma de Bagé.<br/>
+          Gems Bulls — onde estilo encontra identidade.
+        </p>
+        <div class="footer-social">
+          <a class="social-link" href="https://instagram.com" target="_blank" title="Instagram">▣</a>
+          <a class="social-link" href="https://wa.me" target="_blank" title="WhatsApp">◎</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Produtos</h4>
+        <ul>
+          <li><a href="frontend/natural-camo-front/index.html">Camisetas</a></li>
+          <li><a href="#">Jaquetas (Em breve)</a></li>
+          <li><a href="#">Moletons (Em breve)</a></li>
+          <li><a href="frontend/natural-camo-front/index.html">Ver Tudo</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>A Marca</h4>
+        <ul>
+          <li><a href="#about">Nossa História</a></li>
+          <li><a href="#newsletter">Contato</a></li>
+          <li><a href="#">Collab</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Atendimento</h4>
+        <ul>
+          <li><a href="#">Frete & Entrega</a></li>
+          <li><a href="#">Trocas & Devoluções</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Tamanhos</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2024 Natural Camouflage Gems Bulls — Todos os direitos reservados</div>
+      <div class="footer-location">📍 Bagé, RS — Brasil</div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // Fade-up on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Newsletter
+    function handleNewsletter() {
+      const email = document.getElementById('email-input').value;
+      if (!email || !email.includes('@')) {
+        alert('Por favor, insira um e-mail válido.');
+        return;
+      }
+      alert('✓ E-mail cadastrado! Você será o primeiro a saber dos próximos drops.');
+      document.getElementById('email-input').value = '';
+    }
+  </script>
+</body>
 </html>
