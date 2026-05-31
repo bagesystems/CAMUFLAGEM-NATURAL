@@ -1,0 +1,37 @@
+.wrap {
+  background: var(--camo-dark);
+  overflow: hidden;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--camo-mid);
+  position: relative;
+  z-index: 99;
+  margin-top: var(--nav-h);
+}
+
+.ticker {
+  display: flex;
+  gap: 0;
+  animation: ticker 32s linear infinite;
+  width: max-content;
+}
+
+.ticker span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mist);
+  padding: 0 48px;
+  white-space: nowrap;
+}
+
+.ticker span::before {
+  content: '▸';
+  margin-right: 16px;
+  color: var(--sage);
+}
+
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}

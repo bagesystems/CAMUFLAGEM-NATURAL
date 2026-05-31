@@ -1,0 +1,219 @@
+.hero {
+  min-height: calc(100vh - var(--nav-h) - 33px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse at 30% 60%, rgba(44,58,42,0.5) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(74,96,72,0.3) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.left {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 60px 80px 80px;
+  animation: fadeUp 0.8s ease 0.1s both;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(64px, 8vw, 110px);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  margin-bottom: 32px;
+}
+
+.title span { color: var(--camo-lite); }
+
+.subtitle {
+  font-size: 15px;
+  color: var(--grey);
+  max-width: 380px;
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+
+.ctas {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 56px;
+  flex-wrap: wrap;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--accent);
+  padding: 14px 32px;
+  transition: background 0.2s, transform 0.15s;
+}
+.btnPrimary:hover { background: var(--sage); transform: translateY(-1px); }
+
+.btnGhost {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--white);
+  border: 1px solid var(--camo-mid);
+  padding: 14px 32px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btnGhost:hover { border-color: var(--sage); color: var(--sage); }
+
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statNum {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.statLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+
+.divider {
+  width: 1px;
+  height: 40px;
+  background: var(--camo-mid);
+}
+
+.right {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  animation: fadeUp 0.8s ease 0.3s both;
+}
+
+.imgBlock {
+  position: relative;
+  border: 1px solid var(--camo-mid);
+}
+
+.imgTag {
+  position: absolute;
+  top: -12px; left: 24px;
+  background: var(--camo-dark);
+  border: 1px solid var(--camo-mid);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sage);
+  padding: 4px 12px;
+}
+
+.imgPlaceholder {
+  display: block;
+  background: var(--camo-dark);
+}
+
+.imgLabel {
+  padding: 12px 16px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--grey);
+  border-top: 1px solid var(--camo-mid);
+}
+
+.floatBadge {
+  position: absolute;
+  bottom: 80px;
+  right: 30px;
+  width: 72px; height: 72px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--black);
+  line-height: 1.1;
+  letter-spacing: 0.05em;
+  animation: spin 12s linear infinite;
+}
+.floatBadge span { font-size: 10px; letter-spacing: 0.2em; }
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .left { padding: 60px 24px; }
+  .right { display: none; }
+}
